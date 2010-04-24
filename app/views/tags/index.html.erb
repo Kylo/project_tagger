@@ -1,0 +1,19 @@
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag "tags", :plugin => "project_tagger"  %>
+<% end %>
+
+<div class="contextual">
+  <a href="#">Delete Unused</a>
+</div>
+
+<h2>Tags</h2>
+
+<ul>
+  <% @tags.each do |tag| -%>
+    <li class="tag">
+      <span class="tag-name"><%= tag.name -%></span>
+      <b>(Projects: <%= rand(20) %>)</b>
+    </li>
+  <% end -%>
+</ul>

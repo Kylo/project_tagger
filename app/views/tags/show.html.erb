@@ -1,0 +1,14 @@
+
+<div class="contextual">
+  <a href="#">Edit</a>
+  <a href="#">Delete</a>
+</div>
+
+<h2>Tag: <%= @tag.name %></h2>
+
+<h3>Assigned projects:</h3>
+<ul>
+  <% Project.all.each do |p| -%>
+    <li><%= link_to p %></li>
+  <% end -%>
+</ul>

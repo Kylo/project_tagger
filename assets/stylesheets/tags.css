@@ -1,0 +1,22 @@
+
+.tag {
+  font-size: 15pt;
+}
+
+.tag a {
+  font-size: 12px;
+}
+
+.tag b {
+  font-size: 12px;
+}
+
+li.tag {
+  list-style: none;
+  line-height: 150%;
+}
+
+.tag-name {
+  padding: 0 5px;
+  background-color: #BCF;
+}

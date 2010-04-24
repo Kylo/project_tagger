@@ -1,0 +1,17 @@
+
+<h2>Unused tags</h2>
+
+<a href="#">Select All</a><br />
+<a href="#">Clear All</a>
+<br />
+<br />
+
+<% form_tag  do %>
+  <% Tag.all.each do |t| %>
+    <p>
+      <%= check_box_tag t.name, t.id %>
+      <%= label_tag t.name, t.name %>
+    </p>
+  <% end %>
+  <%= submit_tag "Delete selected" %>
+<% end %>
