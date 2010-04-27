@@ -5,7 +5,6 @@ require_dependency 'project'
 module ProjectPatch
 
   def self.included(base) # :nodoc:
-    base.extend(ClassMethods)
     base.send(:include, InstanceMethods)
 
     base.class_eval do
@@ -15,17 +14,13 @@ module ProjectPatch
 
   end
 
-  module ClassMethods
-    
-  end
-
   module InstanceMethods
     def tag_list
-
+      #      TODO pobranie wszystkich tagow projektu i zwrocenie w postaci listy
     end
 
     def tag_list=(list)
-      
+      #      TODO konwersja listy tagow na tagi i tworzenie nowych
     end
   end
 end

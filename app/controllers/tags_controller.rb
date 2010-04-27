@@ -18,4 +18,10 @@ class TagsController < ApplicationController
 
   def create
   end
+
+  def complete_tags
+    @tags = Tag.all
+    render :partial => "auto_completed"
+  end
+
 end

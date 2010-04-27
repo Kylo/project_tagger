@@ -1,4 +1,19 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag "tags", :plugin => "project_tagger"  %>
+<% end %>
+
 <p>
   <%= form.text_field :tag_list, :size => 60 %>
   <br /><em><%= l(:suggested_project_tags) %> Ruby, Ruby on Rails</em>
+  <div id="tags_autocomplete" class="autocomplete"></div>
+  <script type="text/javascript">
+    new Ajax.Autocompleter('project_tag_list',
+    'tags_autocomplete',
+    '/tags/complete_tags',
+    {
+      tokens : ',',
+      paramName : 'tag',
+      minChars : 2
+    });
+  </script>
 </p>
