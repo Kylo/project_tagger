@@ -5,7 +5,6 @@ require_dependency 'project'
 module ProjectPatch
 
   def self.included(base) # :nodoc:
-    base.extend(ClassMethods)
     base.send(:include, InstanceMethods)
 
     base.class_eval do
@@ -14,10 +13,6 @@ module ProjectPatch
       validates_associated :tags
     end
 
-  end
-
-  module ClassMethods
-    
   end
 
   module InstanceMethods
