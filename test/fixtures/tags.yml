@@ -1,7 +1,13 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-one:
+
+java:
   id: 1
-  name: MyString
-two:
+  name: Java
+cpp:
   id: 2
-  name: MyString
+  name: C++
+c:
+  id: 3
+  name: C
+asm:
+  id: 4
+  name: ASM
