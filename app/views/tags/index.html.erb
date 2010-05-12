@@ -3,17 +3,14 @@
   <%= stylesheet_link_tag "tags", :plugin => "project_tagger"  %>
 <% end %>
 
-<div class="contextual">
-  <a href="#">Delete Unused</a>
-</div>
+<h2><%=l 'tags_name' %></h2>
 
-<h2>Tags</h2>
-
-<ul>
+<ul id="tag-list">
   <% @tags.each do |tag| -%>
     <li class="tag">
-      <span class="tag-name"><%= tag.name -%></span>
-      <b>(Projects: <%= rand(20) %>)</b>
+      <span class="tag-name"><%= link_to tag.name,
+          url_for(:action => :show, :id => tag.id) -%></span>
+      <span class="project-count">(<%=l 'tag_projects' -%>: <%= tag.project_count -%>)</span>
     </li>
   <% end -%>
 </ul>

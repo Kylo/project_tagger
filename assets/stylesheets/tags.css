@@ -1,4 +1,8 @@
 
+#admin-menu a.tags {
+  background-image: url("../images/tags.png");
+}
+
 .tag {
   font-size: 15pt;
 }
@@ -16,9 +20,22 @@ li.tag {
   line-height: 150%;
 }
 
-.tag-name {
-  padding: 0 5px;
-  background-color: #BCF;
+span.tag-name a {
+  font-size: 20px;
+}
+
+ul#projects a.project {
+  font-size: 15px;
+}
+
+ul#projects li {
+  list-style-type: none;
+}
+
+span.project-count {
+  font-size: 13px;
+  font-weight: bold;
+  color: #000;
 }
 
 div.autocomplete {

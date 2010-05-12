@@ -1,14 +1,26 @@
+<% content_for :header_tags do -%>
+  <%= stylesheet_link_tag 'tags', :plugin => 'project_tagger' -%>
+<% end -%>
 
 <div class="contextual">
   <a href="#">Edit</a>
   <a href="#">Delete</a>
 </div>
 
-<h2>Tag: <%= @tag.name %></h2>
+<h2><%=l 'tag' %>: <%= @tag.name %></h2>
 
-<h3>Assigned projects:</h3>
-<ul>
-  <% Project.all.each do |p| -%>
-    <li><%= link_to p %></li>
+<h3><%=l 'tags.assigned_projects' %></h3>
+<ul class="projects root">
+  <% @tag.projects.each do |project| -%>
+    <li class="root">
+      <div class="root">
+        <%= link_to project.name,
+          url_for(:controller => 'projects', :action => :show, :id => project.identifier),
+          {:class => 'project'} -%>
+        <div class="wiki description">
+            <%= textilizable(project.short_description(100), :project => project) %>
+        </div>
+      </div>
+    </li>
   <% end -%>
 </ul>

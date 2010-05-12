@@ -1,3 +1,8 @@
 
 pl:
   field_tag_list: "Tagi"
+  tags_name: "Tagi"
+  tag: "Tag"
+  tag_projects: "Projekty"
+  tags:
+    assigned_projects: "Przypisane projekty"
