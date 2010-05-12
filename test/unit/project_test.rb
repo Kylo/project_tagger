@@ -17,7 +17,7 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   def test_adding_tag_to_list
-    num=Tag.all.count
+    num=Tag.count
     p = Project.find 2
     p.tag_list='Java, C++, completely_new_tag'
     assert p.save
@@ -33,7 +33,7 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   def test_removing_tag_from_list
-    num=Tag.all.count
+    num=Tag.count
     p = Project.find 2
     p.tag_list='Java'
     assert p.save
@@ -44,7 +44,7 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   def test_removing_all_tags_from_list
-    num=Tag.all.count
+    num=Tag.count
     p = Project.find 1
     p.tag_list=''
     assert p.save

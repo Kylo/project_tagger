@@ -25,4 +25,9 @@ class TagsController < ApplicationController
     render :partial => "auto_completed"
   end
 
+  def delete
+    Tag.find(params[:id]).destroy
+    redirect_to :action => "index"
+  end
+
 end

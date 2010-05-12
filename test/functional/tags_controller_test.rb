@@ -47,4 +47,13 @@ class TagsControllerTest < ActionController::TestCase
       end
     end
   end
+
+  def test_delete_tag
+    @request.session[:user_id] = 1
+    get :show, :id => 1
+    assert_response :success
+    assert_select 'div#wrapper div#main div#content a[href=/tags/delete/1]'
+    get :delete, :id => 1
+    assert_raise(ActiveRecord::RecordNotFound) {Tag.find 1}
+  end
 end

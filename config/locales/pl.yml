@@ -6,3 +6,5 @@ pl:
   tag_projects: "Projekty"
   tags:
     assigned_projects: "Przypisane projekty"
+    delete: "Usuń"
+    del_confirm: "Czy na pewno chcesz usunąć"
