@@ -58,4 +58,20 @@ class ProjectTest < ActiveSupport::TestCase
     p.tag_list='Ja   va'
     assert !p.save, "Project should be rejected during validation"
   end
+
+  def test_adding_existing_tag
+    p = Project.find 2
+    t = Tag.find 3
+    assert !(p.tags.include?(t))
+    p.tag_list=t.name
+    assert p.save, "Project should save"
+    assert p.tags(true).include?(t), "New tag should be associated"
+  end
+
+  def test_repeated_tags
+    p = Project.find 2
+    p.tag_list='c++, c++, c++'
+    assert p.save, "Project should save"
+    assert p.tags(true).count==1, "Repeated tags should be saved as one"
+  end
 end

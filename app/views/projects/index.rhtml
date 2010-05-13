@@ -16,21 +16,15 @@
 
 <div class="splitcontentright">
   <div class="tags box">
-    <h3>Tags</h3>
-    <div id="tags">
-      <% projects_count = Tag.all_associations %>
-      <% max_count=0 %>
-      <% if (projects_count == 0) %>
+    <h3><%= l :tags_name %></h3>
+    <div id="tags-cloud">
+      <% if Tag.all_associations == 0 %>
         <%= l('tags.no_tags') %>
-        <% else Tag.all.each do |tag| -%>
-          <% if tag.projects.count>max_count%>
-            <% max_count=tag.projects.count %>
-          <% end %>
-        <% end %>
+      <% else %>
         <% Tag.all.each do |tag| -%>
-          <% if tag.projects.count > 0 %>
+          <% unless tag.projects.empty? %>
             <%= link_to tag.name, {:controller => 'tags', :action => 'show', :id => tag},
-              :style => "font-size: #{250*(tag.projects.count)/max_count}%"%>
+              :style => "font-size: #{font_size_for_tag(tag)}%"%>
           <% end %>
         <% end -%>
       <% end %>

@@ -1,6 +1,7 @@
 
 en:
   field_tag_list: "Tags"
+  field_tags: "Provided tags"
   tags_name: "Tags"
   tag: "Tag"
   tag_projects: "Projects"
@@ -9,3 +10,8 @@ en:
     delete: "Delete"
     del_confirm: "Are you sure you want to delete"
     no_tags: "No tags to show"
+
+  activerecord:
+    errors:
+      messages:
+        plural_invalid: "are invalid"

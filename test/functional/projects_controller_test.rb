@@ -32,17 +32,10 @@ class ProjectsControllerTest < ActionController::TestCase
     assert_select 'input[id=project_tag_list][size=60][value="Java, C++"]'
   end
 
-  def test_cloud_tags_size
-    @request.session[:user_id] = 1
-    get :index
-    assert_select 'div#wrapper div#main div#content div#tags a[style=font-size: 250%][href=/tags/show/1]', 'Java'
-    assert_select 'div#wrapper div#main div#content div#tags a[style=font-size: 125%][href=/tags/show/3]', 'C'
-  end
-
   def test_cloud_no_tags
     Tag.destroy(Tag.all)
     @request.session[:user_id] = 1
     get :index
-    assert_select 'div#wrapper div#main div#content div#tags', 'No tags to show'
+    assert_select 'div#wrapper div#main div#content div#tags-cloud', 'No tags to show'
   end
 end

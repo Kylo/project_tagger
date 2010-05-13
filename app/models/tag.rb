@@ -16,4 +16,14 @@ class Tag < ActiveRecord::Base
     Tag.connection.select_value("Select count(*) from projects_tags").to_i
   end
 
+  def self.max_associated_projects
+    Tag.connection.
+      select_value(
+      "SELECT count(*)
+       FROM projects_tags
+       GROUP BY project_id
+       ORDER BY 1 DESC
+       LIMIT 1").to_i
+  end
+
 end

@@ -3,6 +3,14 @@
   background-image: url("../images/tags.png");
 }
 
+#tags-cloud {
+  margin: 10px;
+}
+
+div#tags-cloud a {
+    text-decoration: underline;
+}
+
 .tag {
   font-size: 15pt;
 }
@@ -59,8 +67,4 @@ div.autocomplete ul li {
   padding:2px;
   height:32px;
   cursor:pointer;
-}
-
-div.tags a {
-    text-decoration: underline;
 }
