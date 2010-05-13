@@ -74,4 +74,17 @@ class ProjectTest < ActiveSupport::TestCase
     assert p.save, "Project should save"
     assert p.tags(true).count==1, "Repeated tags should be saved as one"
   end
+
+  def test_filtering
+    projects = Project.find_all_for_all_tags('Java')
+    assert projects.length == 2
+    projects = Project.find_all_for_all_tags('ASM')
+    assert projects.length == 1
+    projects = Project.find_all_for_all_tags('Nonexsistent')
+    assert projects.length == 0
+    projects = Project.find_all_for_all_tags(['Java','C++'])
+    assert projects.length == 2
+    projects = Project.find_all_for_all_tags(['Java','ASM'])
+    assert projects.length == 1
+  end
 end

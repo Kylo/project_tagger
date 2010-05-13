@@ -5,6 +5,7 @@ require_dependency 'project'
 module ProjectPatch
 
   def self.included(base) # :nodoc:
+    base.extend(ClassMethods)
     base.send(:include, InstanceMethods)
 
     base.class_eval do
@@ -13,6 +14,32 @@ module ProjectPatch
       validates_associated :tags, :message => :plural_invalid
     end
 
+  end
+
+  module ClassMethods
+    def find_all_for_all_tags(tags)
+      joins=[]
+      tags.each_with_index do |tag, idx|
+        tags_alias = "tags_#{idx}"
+        projects_tags_alias = "projects_tags_#{idx}"
+        join = <<-END
+          INNER JOIN "projects_tags" #{projects_tags_alias} ON
+            #{projects_tags_alias}.project_id = "projects".id
+          INNER JOIN "tags" #{tags_alias} ON
+            #{projects_tags_alias}.tag_id = #{tags_alias}.id AND
+            #{tags_alias}.name = ?
+        END
+
+        joins << sanitize_sql([join, tag])
+      end
+      joins = joins.join(" ")
+
+      find(:all,
+        :select => 'DISTINCT "projects".*',
+        :joins => joins,
+        :order => 'lft'
+      )
+    end
   end
 
   module InstanceMethods

@@ -7,6 +7,11 @@ class Tag < ActiveRecord::Base
     :with => /^([a-zA-Z0-9!@#\$%^&*()_=\-+\[\]{}?.][a-zA-Z0-9!@#\$%^&*()_=\-+\[\]{}?. ]?)+$/
 
   default_scope :order => :id
+  named_scope :for_projects, lambda { |p_ids| {
+      :select => 'DISTINCT "tags".*',
+      :joins => :projects,
+      :conditions => { :projects => { :id => p_ids } } }
+  }
 
   def project_count
     @project_count ||= self.projects.count

@@ -15,4 +15,20 @@ class TagTest < ActiveSupport::TestCase
     assert Tag.new(:name => 'new').project_count==0
   end
 
+  def test_all_associations
+    assert Tag.all_associations==6
+  end
+
+  def test_max_associations
+    assert Tag.max_associated_projects==4
+  end
+
+  def test_for_projects_scope
+    p = Project.find(1)
+    assert Tag.for_projects(p).count==4
+    p = Project.find(2)
+    assert Tag.for_projects(p).count==2
+    p = Project.find(3)
+    assert Tag.for_projects(p).count==0
+  end
 end

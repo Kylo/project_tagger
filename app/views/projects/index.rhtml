@@ -23,7 +23,8 @@
       <% else %>
         <% Tag.all.each do |tag| -%>
           <% unless tag.projects.empty? %>
-            <%= link_to tag.name, {:controller => 'tags', :action => 'show', :id => tag},
+            <%= link_to tag.name,
+              {:controller => 'tags', :action => 'filter', :tags => tag.name},
               :style => "font-size: #{font_size_for_tag(tag)}%"%>
           <% end %>
         <% end -%>
