@@ -12,4 +12,8 @@ class Tag < ActiveRecord::Base
     @project_count ||= self.projects.count
   end
 
+  def self.all_associations
+    Tag.connection.select_value("Select count(*) from projects_tags").to_i
+  end
+
 end

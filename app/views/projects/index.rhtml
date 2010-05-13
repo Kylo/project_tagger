@@ -18,10 +18,22 @@
   <div class="tags box">
     <h3>Tags</h3>
     <div id="tags">
-      <br />
-      <% Tag.all.each do |tag| -%>
-        <span class="tag-name" style="font-size: <%= "#{100+rand(200)}%" %>;"><%= tag.name %></span>
-      <% end -%>
+      <% projects_count = Tag.all_associations %>
+      <% max_count=0 %>
+      <% if (projects_count == 0) %>
+        <%= l('tags.no_tags') %>
+        <% else Tag.all.each do |tag| -%>
+          <% if tag.projects.count>max_count%>
+            <% max_count=tag.projects.count %>
+          <% end %>
+        <% end %>
+        <% Tag.all.each do |tag| -%>
+          <% if tag.projects.count > 0 %>
+            <%= link_to tag.name, {:controller => 'tags', :action => 'show', :id => tag},
+              :style => "font-size: #{250*(tag.projects.count)/max_count}%"%>
+          <% end %>
+        <% end -%>
+      <% end %>
     </div>
   </div>
 </div>

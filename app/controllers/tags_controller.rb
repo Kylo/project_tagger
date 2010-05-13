@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
   before_filter :require_admin, :except => [:complete_tags]
+  helper :tags
 
   def index
     @tags = Tag.all

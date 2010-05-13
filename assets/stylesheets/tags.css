@@ -60,3 +60,7 @@ div.autocomplete ul li {
   height:32px;
   cursor:pointer;
 }
+
+div.tags a {
+    text-decoration: underline;
+}

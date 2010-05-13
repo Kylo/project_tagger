@@ -8,3 +8,4 @@ pl:
     assigned_projects: "Przypisane projekty"
     delete: "Usuń"
     del_confirm: "Czy na pewno chcesz usunąć"
+    no_tags: "Brak tagów do wyświetlenia"
