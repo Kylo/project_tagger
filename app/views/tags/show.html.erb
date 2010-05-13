@@ -3,9 +3,8 @@
 <% end -%>
 
 <div class="contextual">
-  <a href="#">Edit</a>
   <%= link_to l('tags.delete'), {:action => 'delete', :id => @tag},
-    :confirm => "#{l('tags.del_confirm')}: #{@tag.name}?" %>
+    :confirm => "#{l('tags.del_confirm')}: #{@tag.name}?", :class => 'icon icon-del' %>
 </div>
 
 <h2><%=l 'tag' %>: <%= @tag.name %></h2>
