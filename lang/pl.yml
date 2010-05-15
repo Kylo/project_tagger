@@ -2,6 +2,7 @@
 pl:
   label_project_for_tags: "Projekty oznaczone przez: "
   field_tag_list: "Tagi"
+  field_tag_list_comment: "Możesz podać kilka tagów rozdzielonych przecinkiem."
   field_tags: "Podane tagi"
   tags_name: "Tagi"
   tag: "Tag"

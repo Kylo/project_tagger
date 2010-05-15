@@ -1,7 +1,4 @@
-<% content_for :header_tags do %>
-  <%= stylesheet_link_tag "tags", :plugin => "project_tagger"  %>
-<% end %>
-
 <p>
-  <%= form.text_field :tag_list, :size => 60 %>
+  <%= form.text_field :tag_list, :size => 60 %><br />
+  <em><%=l :field_tag_list_comment %></em>
 </p>

@@ -1,7 +1,3 @@
-<% content_for :header_tags do -%>
-  <%= stylesheet_link_tag 'tags', :plugin => 'project_tagger' -%>
-<% end -%>
-
 <div class="contextual">
   <%= link_to l('tags.delete'), {:action => 'delete', :id => @tag},
     :confirm => "#{l('tags.del_confirm')}: #{@tag.name}?", :class => 'icon icon-del' %>

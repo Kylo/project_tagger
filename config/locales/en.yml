@@ -2,6 +2,7 @@
 en:
   label_project_for_tags: "Projects tagged with: "
   field_tag_list: "Tags"
+  field_tag_list_comment: "You can specify multiple comma-separated tags."
   field_tags: "Provided tags"
   tags_name: "Tags"
   tag: "Tag"

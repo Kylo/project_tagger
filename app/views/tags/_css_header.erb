@@ -1,5 +1,3 @@
-<% if controller_name == 'admin' && action_name == 'index' -%>
-  <% content_for :header_tags do -%>
-    <%= stylesheet_link_tag 'tags', :plugin => 'project_tagger' -%>
-  <% end -%>
+<% content_for :header_tags do -%>
+  <%= stylesheet_link_tag 'tags', :plugin => 'project_tagger' -%>
 <% end -%>

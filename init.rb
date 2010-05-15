@@ -6,7 +6,7 @@ Redmine::Plugin.register :project_tagger do
   name 'ProjectTagger'
   author 'Krzysztof Kuźnik, Szymon Depta'
   description 'Plugin provides tagging for Redmine projects'
-  version 'prototype'
+  version '0.7'
 
   menu :admin_menu, :tags, { :controller => 'tags', :action => 'index' }, :caption => :tags_name
 end

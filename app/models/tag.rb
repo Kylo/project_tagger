@@ -13,14 +13,18 @@ class Tag < ActiveRecord::Base
       :conditions => { :projects => { :id => p_ids } } }
   }
 
+  # Returns number of projects associated with this tag.
   def project_count
     @project_count ||= self.projects.count
   end
 
+  # +all_associations+ class method is used to count all tag-project connections
   def self.all_associations
     Tag.connection.select_value("Select count(*) from projects_tags").to_i
   end
 
+  # This class method returns maximum number of projects associated with tag
+  # for all tags.
   def self.max_associated_projects
     Tag.connection.
       select_value(

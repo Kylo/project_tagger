@@ -9,6 +9,7 @@
 
 div#tags-cloud a {
     text-decoration: underline;
+    padding: 0 3px;
 }
 
 .tag {
