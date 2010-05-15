@@ -41,6 +41,7 @@ class TagsController < ApplicationController
 
   def delete
     Tag.find(params[:id]).destroy
+    flash[:notice]=l "tags.deleted"
     redirect_to :action => "index"
   end
 

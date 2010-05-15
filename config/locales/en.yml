@@ -12,6 +12,7 @@ en:
     delete: "Delete"
     del_confirm: "Are you sure you want to delete"
     no_tags: "No tags to show"
+    deleted: "Tag successfully deleted"
 
   activerecord:
     errors:
