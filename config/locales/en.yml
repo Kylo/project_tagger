@@ -1,0 +1,19 @@
+
+en:
+  label_project_for_tags: "Projects tagged with: "
+  field_tag_list: "Tags"
+  field_tag_list_comment: "You can specify multiple comma-separated tags."
+  field_tags: "Provided tags"
+  tags_name: "Tags"
+  tag: "Tag"
+  tag_projects: "Projects"
+  tags:
+    assigned_projects: "Assigned projects"
+    delete: "Delete"
+    del_confirm: "Are you sure you want to delete"
+    no_tags: "No tags to show"
+
+  activerecord:
+    errors:
+      messages:
+        plural_invalid: "are invalid"

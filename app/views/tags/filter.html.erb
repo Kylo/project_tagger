@@ -1,0 +1,28 @@
+<h2><%=l(:label_project_plural)%></h2>
+
+<div class="splitcontentleft">
+  <%= render_project_hierarchy(@projects)%>
+</div>
+
+<div class="splitcontentright">
+  <div class="tags box">
+    <h3><%= l :tags_name %></h3>
+    <div id="tags-cloud">
+      <% if @tags.length == 0 %>
+        <%= l('tags.no_tags') %>
+      <% else %>
+        <% @tags.each do |tag| -%>
+          <% unless tag.projects.empty? %>
+            <%= link_to tag.name,
+              {:controller => 'tags', :action => 'filter', :tags => "#{params[:tags]},#{tag.name}"},
+              :style => "font-size: #{font_size_for_filtered_tag(tag)}%"%>
+          <% end %>
+        <% end -%>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div style="clear: both;"></div>
+
+<% html_title(l(:label_project_for_tags)+" "+params[:tags].split(/,/).join(" : ")) -%>

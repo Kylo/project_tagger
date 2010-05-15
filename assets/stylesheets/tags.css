@@ -1,0 +1,71 @@
+
+#admin-menu a.tags {
+  background-image: url("../images/tags.png");
+}
+
+#tags-cloud {
+  margin: 10px;
+}
+
+div#tags-cloud a {
+    text-decoration: underline;
+    padding: 0 3px;
+}
+
+.tag {
+  font-size: 15pt;
+}
+
+.tag a {
+  font-size: 12px;
+}
+
+.tag b {
+  font-size: 12px;
+}
+
+li.tag {
+  list-style: none;
+  line-height: 150%;
+}
+
+span.tag-name a {
+  font-size: 20px;
+}
+
+ul#projects a.project {
+  font-size: 15px;
+}
+
+ul#projects li {
+  list-style-type: none;
+}
+
+span.project-count {
+  font-size: 13px;
+  font-weight: bold;
+  color: #000;
+}
+
+div.autocomplete {
+  position:absolute;
+  width:250px;
+  background-color:white;
+  border:1px solid #888;
+  margin:0;
+  padding:0;
+}
+div.autocomplete ul {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+div.autocomplete ul li.selected { background-color: #ffb;}
+div.autocomplete ul li {
+  list-style-type:none;
+  display:block;
+  margin:0;
+  padding:2px;
+  height:32px;
+  cursor:pointer;
+}

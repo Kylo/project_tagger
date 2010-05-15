@@ -1,0 +1,22 @@
+<div class="contextual">
+  <%= link_to l('tags.delete'), {:action => 'delete', :id => @tag},
+    :confirm => "#{l('tags.del_confirm')}: #{@tag.name}?", :class => 'icon icon-del' %>
+</div>
+
+<h2><%=l 'tag' %>: <%= @tag.name %></h2>
+
+<h3><%=l 'tags.assigned_projects' %></h3>
+<ul class="projects root">
+  <% @tag.projects.each do |project| -%>
+    <li class="root">
+      <div class="root">
+        <%= link_to project.name,
+          url_for(:controller => 'projects', :action => :show, :id => project.identifier),
+          {:class => 'project'} -%>
+        <div class="wiki description">
+            <%= textilizable(project.short_description(100), :project => project) %>
+        </div>
+      </div>
+    </li>
+  <% end -%>
+</ul>

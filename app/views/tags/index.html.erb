@@ -1,0 +1,11 @@
+<h2><%=l 'tags_name' %></h2>
+
+<ul id="tag-list">
+  <% @tags.each do |tag| -%>
+    <li class="tag">
+      <span class="tag-name"><%= link_to tag.name,
+          url_for(:action => :show, :id => tag.id) -%></span>
+      <span class="project-count">(<%=l 'tag_projects' -%>: <%= tag.project_count -%>)</span>
+    </li>
+  <% end -%>
+</ul>
