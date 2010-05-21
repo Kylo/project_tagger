@@ -11,7 +11,7 @@ module ProjectPatch
     base.class_eval do
       unloadable
       has_and_belongs_to_many :tags
-      validates_associated :tags, :message => :plural_invalid
+      validates_associated :tags, :message => :tags_invalid
     end
 
   end

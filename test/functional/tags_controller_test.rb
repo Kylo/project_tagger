@@ -56,4 +56,18 @@ class TagsControllerTest < ActionController::TestCase
     get :delete, :id => 1
     assert_raise(ActiveRecord::RecordNotFound) {Tag.find 1}
   end
+
+  def test_autocomplete_get
+    get :complete_tags
+    assert_response 404
+  end
+
+  def test_autocomplete_post
+    post :complete_tags, :tag => 'ja'
+    assert_response :success
+    assert_select 'ul', 1
+    assert_select 'li', 1
+    assert_select 'ul li span.value', 'Java'
+    assert_select 'ul li span.informal', 'Projects: 2'
+  end
 end

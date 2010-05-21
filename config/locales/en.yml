@@ -13,8 +13,9 @@ en:
     del_confirm: "Are you sure you want to delete"
     no_tags: "No tags to show"
     deleted: "Tag successfully deleted"
+    projects: "Projects:"
 
   activerecord:
     errors:
       messages:
-        plural_invalid: "are invalid"
+        tags_invalid: "are invalid. Allowed characters - letters, digits, single space, and !@#$%^&*()_=-+[]{}?."

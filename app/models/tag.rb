@@ -12,11 +12,27 @@ class Tag < ActiveRecord::Base
       :joins => :projects,
       :conditions => { :projects => { :id => p_ids } } }
   }
+  named_scope :for_autocomplete, lambda { |stag| {
+      :select => 'tags.*, count(projects_tags.*) as project_count',
+      :joins => 'INNER JOIN projects_tags ON tags.id = projects_tags.tag_id',
+      :group => 'tags.id, tags.name',
+      :conditions => ['LOWER(tags.name) LIKE ?', "%"+stag.downcase+"%" ],
+      :order => 'project_count DESC',
+      :limit => 10
+  }
+  }
 
   # Returns number of projects associated with this tag.
   def project_count
+    @project_count ||= attributes['project_count'] 
     @project_count ||= self.projects.count
   end
+
+#  def self.for_autocomplete(stag)
+#    tags = Tag.all :conditions => ['tags.name LIKE ?', "%"+stag+"%" ]
+#    tags = tags.to_a.sort! { |a,b| b.project_count <=> a.project_count }
+#    tags[0,10]
+#  end
 
   # +all_associations+ class method is used to count all tag-project connections
   def self.all_associations

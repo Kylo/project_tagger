@@ -35,7 +35,11 @@ class TagsController < ApplicationController
   end
 
   def complete_tags
-    @tags = Tag.all
+    unless request.post?
+      render_404
+      return
+    end
+    @tags = Tag.for_autocomplete params[:tag]
     render :partial => "auto_completed"
   end
 

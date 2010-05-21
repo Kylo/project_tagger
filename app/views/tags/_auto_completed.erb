@@ -1,5 +1,11 @@
 <ul>
-  <% @tags.each do |tag| %>
-    <li><%= tag.name %></li>
-  <% end %>
+  <% @tags.each do |tag| -%>
+    <li>
+      <%= tag_name_for_complete(tag.name, params[:tag]) -%>
+      <span style="display: none;" class="value"><%= tag.name -%></span>
+      <span class="informal">
+        <%= l("tags.projects") + " #{tag.project_count}" -%>
+      </span>
+    </li>
+  <% end -%>
 </ul>

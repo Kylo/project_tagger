@@ -31,4 +31,15 @@ class TagTest < ActiveSupport::TestCase
     p = Project.find(3)
     assert Tag.for_projects(p).count==0
   end
+
+  def test_for_autocomplete_scope
+    tags = Tag.for_autocomplete('a')
+    assert_equal 2, tags.length
+    tags2 = Tag.for_autocomplete('A')
+    assert_equal tags, tags2
+    tags2 = tags2.to_a.sort { |a,b| b.project_count <=> a.project_count }
+    assert_equal tags, tags2
+    tags2 = Tag.for_autocomplete('C')
+    assert_not_equal tags, tags2
+  end
 end

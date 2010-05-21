@@ -87,4 +87,6 @@ class ProjectTest < ActiveSupport::TestCase
     projects = Project.find_all_for_all_tags(['Java','ASM'])
     assert projects.length == 1
   end
+
+  
 end

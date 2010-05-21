@@ -13,8 +13,9 @@ pl:
     del_confirm: "Czy na pewno chcesz usunąć"
     no_tags: "Brak tagów do wyświetlenia"
     deleted: "Tag został pomyślnie usunięty"
+    projects: "Projekty:"
 
   activerecord:
     errors:
       messages:
-        plural_invalid: "są błędne"
+        tags_invalid: "są błędne. Dozwolone znaki - litery, cyfry, pojedyncza spacja oraz !@#$%^&*()_=-+[]{}?."
