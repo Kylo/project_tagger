@@ -15,9 +15,9 @@ class TagField < Redmine::Hook::ViewListener
   render_on :view_projects_form, :partial => "tags/tag_field"
 end
 
-#class ProjectTags < Redmine::Hook::ViewListener
-#  render_on :view_projects_show_right, :partial => "tags/project_tags"
-#end
+class ProjectTags < Redmine::Hook::ViewListener
+  render_on :view_projects_show_right, :partial => "tags/project_tags"
+end
 
 class TagsCSS < Redmine::Hook::ViewListener
   render_on :view_layouts_base_html_head, :partial => "tags/css_header"

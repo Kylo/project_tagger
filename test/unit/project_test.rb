@@ -72,7 +72,9 @@ class ProjectTest < ActiveSupport::TestCase
     p = Project.find 2
     p.tag_list='c++, c++, c++'
     assert p.save, "Project should save"
-    assert p.tags(true).count==1, "Repeated tags should be saved as one"
+    #assert p.tags(true).count==1, "Repeated tags should be saved as one"
+    assert_equal 1, p.tags(true).count
+    
   end
 
   def test_filtering

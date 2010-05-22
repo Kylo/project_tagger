@@ -26,9 +26,9 @@ module ProjectPatch
         tags_alias = "tags_#{idx}"
         projects_tags_alias = "projects_tags_#{idx}"
         join = <<-EOS
-          INNER JOIN "projects_tags" #{projects_tags_alias}
-            ON #{projects_tags_alias}.project_id = "projects".id
-          INNER JOIN "tags" #{tags_alias}
+          INNER JOIN projects_tags #{projects_tags_alias}
+            ON #{projects_tags_alias}.project_id = projects.id
+          INNER JOIN tags #{tags_alias}
             ON #{projects_tags_alias}.tag_id = #{tags_alias}.id
               AND #{tags_alias}.name = ?
         EOS
@@ -38,7 +38,7 @@ module ProjectPatch
       joins = joins.join(" ")
 
       find(:all,
-        :select => 'DISTINCT "projects".*',
+        :select => 'DISTINCT projects.*',
         :joins => joins,
         :order => 'lft'
       )
@@ -59,18 +59,18 @@ module ProjectPatch
     def tag_list=(list)
       new_tag_list=list.split(/,/).map{ |name| name.strip }
       new_tag_list.each do |tag_name|
-        unless self.tags.map(&:name).include?(tag_name)
+        unless self.tags(false).map(&:name).include?(tag_name)
           if t=Tag.find_by_name(tag_name)
-            self.tags<<t
+            self.tags(false)<<t
           else
-            self.tags.build :name => tag_name
+            self.tags(false).build :name => tag_name
           end
         end
       end
-      tmp=Array.new(self.tags.to_a)
+      tmp=Array.new(self.tags(false).to_a)
       tmp.each do |tag|
         unless new_tag_list.include? tag.name
-          self.tags.delete tag
+          self.tags(false).delete tag
         end
       end
       @tag_list=nil

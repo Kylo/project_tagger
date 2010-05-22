@@ -8,12 +8,12 @@ class Tag < ActiveRecord::Base
 
   default_scope :order => :id
   named_scope :for_projects, lambda { |p_ids| {
-      :select => 'DISTINCT "tags".*',
+      :select => 'DISTINCT tags.*',
       :joins => :projects,
       :conditions => { :projects => { :id => p_ids } } }
   }
   named_scope :for_autocomplete, lambda { |stag| {
-      :select => 'tags.*, count(projects_tags.*) as project_count',
+      :select => 'tags.*, count(projects_tags.tag_id) as project_count',
       :joins => 'INNER JOIN projects_tags ON tags.id = projects_tags.tag_id',
       :group => 'tags.id, tags.name',
       :conditions => ['LOWER(tags.name) LIKE ?', "%"+stag.downcase+"%" ],
