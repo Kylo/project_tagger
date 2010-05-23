@@ -5,6 +5,6 @@ module TagsHelper
   end
 
   def tag_name_for_complete(tag, stag)
-    tag.sub(/(#{stag})/i, '<strong>\1</strong>')
+    tag.sub(/(#{Regexp.escape(stag)})/i, '<strong>\1</strong>')
   end
 end

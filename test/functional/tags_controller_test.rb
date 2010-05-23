@@ -70,4 +70,9 @@ class TagsControllerTest < ActionController::TestCase
     assert_select 'ul li span.value', 'Java'
     assert_select 'ul li span.informal', 'Projects: 2'
   end
+
+  def test_autocomplete_special_chars
+    post :complete_tags, :tag => '++'
+    assert_response :success
+  end
 end
