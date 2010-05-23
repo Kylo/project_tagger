@@ -12,6 +12,10 @@ div#tags-cloud a {
     padding: 0 3px;
 }
 
+div#tags a {
+  padding: 0 10px;
+}
+
 .tag {
   font-size: 15pt;
 }
