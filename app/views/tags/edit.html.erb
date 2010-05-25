@@ -1,9 +1,27 @@
-<h2>Edit tag: <%= @tag.name %></h2>
+<%= javascript_include_tag 'controls', :plugin => 'project_tagger' -%>
 
-<% form_tag do -%>
+<h2><%= l 'tags.edit' %> <%= @tag.name %></h2>
+
+<% form_tag({ :controller => 'tags', :action => 'update', :id => @tag.id },
+  :onsubmit => "return confirm(\'#{l('tags.confirm_edit')}\');") do -%>
+  <%= hidden_field_tag 'tag[id]', @tag.id %>
+  <%= error_messages_for 'tag' %>
   <p>
-    <%= label_tag :name, 'New name for tag' %>
-    <%= text_field_tag :name, @tag.name %>
+    <%= label_tag 'tag[name]', l('tags.new_name') %>
+    <%= text_field_tag 'tag[name]', @tag.name %>
+  <div id="tags_autocomplete" class="autocomplete"></div>
+  <script type="text/javascript">
+    new Ajax.Autocompleter('tag_name',
+    'tags_autocomplete',
+    '/tags/complete_tags',
+    {
+      paramName : 'tag',
+      minChars : 2,
+      select: 'value'
+    });
+  </script>
   </p>
-  <%= submit_tag "Save" %>
+  <%= submit_tag l('tags.save') %>
 <% end -%>
+
+<% html_title(l('tags.edit')+": "+@tag.name) -%>

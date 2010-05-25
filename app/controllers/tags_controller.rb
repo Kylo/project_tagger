@@ -18,6 +18,16 @@ class TagsController < ApplicationController
     @tag = Tag.find params[:id]
   end
 
+  def update
+    @tag = Tag.find params[:tag][:id]
+    if @tag.update_attributes params[:tag]
+      flash[:notice]=l('tags.updated')
+      redirect_to :action => 'show', :id => Tag.find_by_name(params[:tag][:name])
+    else
+      render 'edit'
+    end
+  end
+
   def filter
     tag_list=params[:tags].split(/,/)
     @projects = Project.visible.find_all_for_all_tags(tag_list)

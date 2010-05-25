@@ -19,7 +19,7 @@ class Tag < ActiveRecord::Base
       :conditions => ['LOWER(tags.name) LIKE ?', "%"+stag.downcase+"%" ],
       :order => 'project_count DESC',
       :limit => 10
-  }
+    }
   }
 
   # Returns number of projects associated with this tag.
@@ -28,11 +28,20 @@ class Tag < ActiveRecord::Base
     @project_count ||= self.projects.count
   end
 
-#  def self.for_autocomplete(stag)
-#    tags = Tag.all :conditions => ['tags.name LIKE ?', "%"+stag+"%" ]
-#    tags = tags.to_a.sort! { |a,b| b.project_count <=> a.project_count }
-#    tags[0,10]
-#  end
+  def name=(new_name)
+    if self.new_record?
+      write_attribute :name, new_name
+    elsif self.name != new_name
+      if (t=Tag.find_by_name(new_name))
+        t.project_ids = t.project_ids + self.project_ids
+        t.project_ids.uniq!
+        t.save
+        self.destroy()
+      else
+        write_attribute :name, new_name
+      end
+    end
+  end
 
   # +all_associations+ class method is used to count all tag-project connections
   def self.all_associations

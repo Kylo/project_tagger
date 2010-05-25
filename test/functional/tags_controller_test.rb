@@ -57,6 +57,22 @@ class TagsControllerTest < ActionController::TestCase
     assert_raise(ActiveRecord::RecordNotFound) {Tag.find 1}
   end
 
+  def test_edit_tag_for_user
+    @request.session[:user_id] = 2
+    get :edit, :id => Tag.find(1)
+    assert_response 403
+  end
+
+  def test_edit_tag_for_admin
+    @request.session[:user_id] = 1
+    t = Tag.find(1)
+    get :edit, :id => t
+    assert_response :success
+    assert_select "label[for=tag_name]"
+    assert_select "input[type=text][value=#{t.name}]"
+    assert_select "input[type=submit][value=Save]"
+  end
+
   def test_autocomplete_get
     get :complete_tags
     assert_response 404
