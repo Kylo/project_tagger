@@ -20,8 +20,8 @@ class Tag < ActiveRecord::Base
       :conditions => ['LOWER(tags.name) LIKE ?', "%"+stag.downcase+"%" ],
       :order => 'project_count DESC',
       :limit => 10
-    }
-  }
+  }}
+
 
   # Returns number of projects associated with this tag.
   def project_count
@@ -51,6 +51,15 @@ class Tag < ActiveRecord::Base
        GROUP BY tag_id
        ORDER BY 1 DESC
        LIMIT 1").to_i
+  end
+
+  def self.find_unused
+    Tag.find_by_sql(
+    "SELECT *
+     FROM tags
+     WHERE tags.id NOT IN (
+       SELECT DISTINCT projects_tags.tag_id
+       FROM projects_tags)")
   end
 
 end
