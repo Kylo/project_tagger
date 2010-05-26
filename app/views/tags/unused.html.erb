@@ -1,17 +1,28 @@
 
-<h2>Unused tags</h2>
+<h2><%= l 'tags.unused_tags'%></h2>
+<% unused_tags = Tag.find_unused %>
+<% if unused_tags.empty? %>
+  <%= l('tags.no_unused_tags') %>
+<% else %>
+  <%= link_to_function(l('tags.select_all'),"checkboxes.each(function(e){ e.checked = 1 })") %> <br />
+  <%= link_to_function(l('tags.deselect_all'),"checkboxes.each(function(e){ e.checked = 0 })") %>
+  <br />
+  <br />
 
-<a href="#">Select All</a><br />
-<a href="#">Clear All</a>
-<br />
-<br />
-
-<% form_tag  do %>
-  <% Tag.all.each do |t| %>
-    <p>
-      <%= check_box_tag t.name, t.id %>
-      <%= label_tag t.name, t.name %>
-    </p>
+  <% form_tag({:action => :del_unused}, :method => :post) do %>
+    <% unused_tags.each do |t| %>
+      <p>
+        <%= check_box_tag "tags_ids[]", t.id, false, :id => t.name %>
+        <%= label_tag t.name, t.name %>
+      </p>
+    <% end %>
+    <%= submit_tag l('tags.delete_selected') %>
   <% end %>
-  <%= submit_tag "Delete selected" %>
 <% end %>
+
+<script type="text/javascript">
+  var checkboxes = [];
+  checkboxes = $$('input').each(function(e){ if(e.type == 'checkbox') checkboxes.push(e) });
+  var form = $('unused');
+  checkboxes = form.getInputs('checkbox');
+</script>

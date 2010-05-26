@@ -75,4 +75,17 @@ class TagsControllerTest < ActionController::TestCase
     post :complete_tags, :tag => '++'
     assert_response :success
   end
+
+  def test_del_unused
+    t = Tag.find(1)
+    t.project_ids = []
+    t.save
+    @request.session[:user_id] = 1
+    assert_difference('Tag.count',-1) {
+      post :del_unused, :tags_ids => t.id
+    }
+    assert_redirected_to :action => "index"
+    assert_equal("Deleted tags: #{t.name}", flash[:notice])
+  end
+
 end

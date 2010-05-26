@@ -14,6 +14,13 @@ en:
     no_tags: "No tags to show"
     deleted: "Tag successfully deleted"
     projects: "Projects:"
+    delete_unused: "Delete unused"
+    no_unused_tags: "No unused tags"
+    select_all: "Select all"
+    deselect_all: "Deselect all"
+    delete_selected: "Delete selected"
+    deleted_tags: "Deleted tags"
+    unused_tags: "Unused tags"
 
   activerecord:
     errors:

@@ -42,4 +42,12 @@ class TagTest < ActiveSupport::TestCase
     tags2 = Tag.for_autocomplete('C')
     assert_not_equal tags, tags2
   end
+
+  def test_find_unused
+    assert Tag.find_unused.empty?
+    t = Tag.find(1)
+    t.project_ids = []
+    t.save
+    assert_equal 1, Tag.find_unused.length
+  end
 end
