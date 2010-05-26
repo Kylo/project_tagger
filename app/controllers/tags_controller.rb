@@ -92,7 +92,10 @@ class TagsController < ApplicationController
       return
     end
     tags = Tag.all.to_a.map(&:name)
-    found = []
+    current = params[:current].split(/,/)
+    current.map!{|tag_name| tag_name.strip}
+    current = Set.new(current)
+    found = Set.new
     tags.each do |tag|
       if params[:name] =~ /#{Regexp.escape(tag)}/i \
         || params[:description] =~ /#{Regexp.escape(tag)}/i
@@ -100,7 +103,8 @@ class TagsController < ApplicationController
         found << tag
       end
     end
-    @tags_list = found.join(", ")
+    current.merge(found)
+    @tags_list = current.to_a.sort.join(", ")
   end
 
   def delete

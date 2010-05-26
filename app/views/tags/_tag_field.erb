@@ -6,7 +6,8 @@
       method: 'post',
       parameters:{
         name: $F('project_name'),
-        description: $F('project_description')
+        description: $F('project_description'),
+        current: $F('project_tag_list')
       }
     });
   }
