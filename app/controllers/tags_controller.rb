@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  before_filter :require_admin, :except => [:complete_tags]
+  before_filter :require_admin, :except => [:complete_tags, :suggest]
   helper :projects
 
   layout 'admin', :except => :filter
@@ -76,6 +76,23 @@ class TagsController < ApplicationController
     end
     @tags = Tag.for_autocomplete params[:tag]
     render :partial => "auto_completed"
+  end
+
+  def suggest
+    unless request.post?
+      render :nothing=>true
+      return
+    end
+    tags = Tag.all.to_a.map(&:name)
+    found = []
+    tags.each do |tag|
+      if params[:name] =~ /#{Regexp.escape(tag)}/i \
+        || params[:description] =~ /#{Regexp.escape(tag)}/i
+
+        found << tag
+      end
+    end
+    @tags_list = found.join(", ")
   end
 
   def delete
