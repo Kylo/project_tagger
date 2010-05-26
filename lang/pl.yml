@@ -19,6 +19,7 @@ pl:
     projects: "Projekty:"
     new_name: "Nowa nazwa tagu"
     confirm_edit: "Czy na pewno chcesz zmienić nazwę tagu?"
+    exists: "Tag o podanej nazwie już istnieje. Tagi zostaną połączone."
 
   activerecord:
     errors:

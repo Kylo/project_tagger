@@ -1,6 +1,7 @@
 class Tag < ActiveRecord::Base
   has_and_belongs_to_many :projects
 
+  attr_accessible :name
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_format_of :name,
@@ -28,19 +29,11 @@ class Tag < ActiveRecord::Base
     @project_count ||= self.projects.count
   end
 
-  def name=(new_name)
-    if self.new_record?
-      write_attribute :name, new_name
-    elsif self.name != new_name
-      if (t=Tag.find_by_name(new_name))
-        t.project_ids = t.project_ids + self.project_ids
-        t.project_ids.uniq!
-        t.save
-        self.destroy()
-      else
-        write_attribute :name, new_name
-      end
-    end
+  def self.merge_tags(tag_saved, tag_dropped)
+    tag_saved.project_ids += tag_dropped.project_ids
+    tag_saved.project_ids.uniq!
+    tag_saved.save
+    tag_dropped.destroy
   end
 
   # +all_associations+ class method is used to count all tag-project connections
@@ -55,7 +48,7 @@ class Tag < ActiveRecord::Base
       select_value(
       "SELECT count(*)
        FROM projects_tags
-       GROUP BY project_id
+       GROUP BY tag_id
        ORDER BY 1 DESC
        LIMIT 1").to_i
   end

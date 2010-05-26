@@ -1,7 +1,9 @@
 class TagsController < ApplicationController
   before_filter :require_admin, :except => [:complete_tags]
   helper :projects
-  
+
+  layout 'admin', :except => :filter
+
   def index
     @tags = Tag.all
   end
@@ -19,13 +21,36 @@ class TagsController < ApplicationController
   end
 
   def update
-    @tag = Tag.find params[:tag][:id]
-    if @tag.update_attributes params[:tag]
-      flash[:notice]=l('tags.updated')
-      redirect_to :action => 'show', :id => Tag.find_by_name(params[:tag][:name])
-    else
-      render 'edit'
+    unless request.post?
+      render_404
+      return
     end
+    @tag = Tag.find params[:tag][:id]
+    existing_tag = Tag.find_by_name params[:tag][:name]
+    if !existing_tag.nil? and @tag != existing_tag
+      Tag.merge_tags existing_tag, @tag
+    else
+      unless @tag.update_attributes params[:tag]
+        render 'edit'
+        return
+      end
+    end
+    flash[:notice]=l('tags.updated')
+    redirect_to :action => 'show', :id => Tag.find_by_name(params[:tag][:name])
+  end
+
+  def check
+    unless request.post?
+      render_404
+      return
+    end
+    if t=Tag.find_by_name(params[:tag][:name])
+      if t.id != params[:tag][:id].to_i
+        render :text => 'true'
+        return
+      end
+    end
+    render :text =>'false'
   end
 
   def filter

@@ -73,6 +73,43 @@ class TagsControllerTest < ActionController::TestCase
     assert_select "input[type=submit][value=Save]"
   end
 
+  def test_tag_update_must_be_post
+    @request.session[:user_id] = 1
+    t = Tag.find(1)
+    get :update, :id => t
+    assert_response 404
+  end
+
+  def test_successful_tag_update
+    @request.session[:user_id] = 1
+    t = Tag.find(1)
+    assert_no_difference('Tag.count') {
+      post :update, :id => t, :tag => { :id => t.id, :name => t.name+"_new" }
+    }
+    assert_redirected_to :action => "show", :id => t
+    assert_equal('Tag successfully updated', flash[:notice])
+  end
+
+  def test_unsuccessful_tag_update
+    @request.session[:user_id] = 1
+    t = Tag.find(1)
+    assert_no_difference('Tag.count') {
+      post :update, :id => t, :tag => { :id => t.id, :name => "" }
+    }
+    assert_template 'edit'
+    assert_select 'div#errorExplanation'
+  end
+
+  def test_successful_tag_merge
+    @request.session[:user_id] = 1
+    t = Tag.find(1)
+    assert_difference('Tag.count',-1) {
+      post :update, :id => t, :tag => { :id => t.id, :name => Tag.find(2).name }
+    }
+    assert_redirected_to :action => "show", :id => Tag.find(2)
+    assert_equal('Tag successfully updated', flash[:notice])
+  end
+
   def test_autocomplete_get
     get :complete_tags
     assert_response 404

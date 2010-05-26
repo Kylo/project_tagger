@@ -2,8 +2,30 @@
 
 <h2><%= l 'tags.edit' %> <%= @tag.name %></h2>
 
+<script type="text/javascript">
+  function check_tag() {
+    var confirm_change = false;
+    new Ajax.Request('/tags/check',{
+      asynchronous: false,
+      method: 'post',
+      parameters: $('edit_tag_form').serialize(true),
+      onSuccess: function(response) {
+        if(response.responseText.match('true')){
+          confirm_change = confirm('<%= l('tags.exists') %>');
+        } else {
+          confirm_change = confirm('<%= l('tags.confirm_edit') %>');
+        }
+      },
+      onFailure: function() {
+        confirm_change = false;
+      }
+    });
+    return confirm_change;
+  }
+</script>
+
 <% form_tag({ :controller => 'tags', :action => 'update', :id => @tag.id },
-  :onsubmit => "return confirm(\'#{l('tags.confirm_edit')}\');") do -%>
+  :onsubmit => "return check_tag();", :id => "edit_tag_form") do -%>
   <%= hidden_field_tag 'tag[id]', @tag.id %>
   <%= error_messages_for 'tag' %>
   <p>

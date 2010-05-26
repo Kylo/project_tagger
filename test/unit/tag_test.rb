@@ -20,7 +20,7 @@ class TagTest < ActiveSupport::TestCase
   end
 
   def test_max_associations
-    assert_equal 4, Tag.max_associated_projects
+    assert_equal 2, Tag.max_associated_projects
   end
 
   def test_for_projects_scope
@@ -50,22 +50,22 @@ class TagTest < ActiveSupport::TestCase
     t2 = Tag.find(2)
     p_ids = t1.projects.to_a.map(&:id) + t2.projects.to_a.map(&:id)
     p_ids.uniq!.sort!
-    assert t1.update_attributes( :name => t2.name )
-    assert t1.frozen?, "Tag 1 should be frozen"
-    assert_raise (ActiveRecord::RecordNotFound) { Tag.find(1) }
-    assert_nothing_raised(Exception) { t2 = Tag.find(2) }
-    assert_equal p_ids, t2.projects.to_a.map(&:id).sort
+    assert Tag.merge_tags(t1,t2)
+    assert t2.frozen?, "Tag 2 should be frozen"
+    assert_raise (ActiveRecord::RecordNotFound) { Tag.find(2) }
+    assert_nothing_raised(Exception) { t1 = Tag.find(1) }
+    assert_equal p_ids, t1.projects.to_a.map(&:id).sort
   end
 
   def test_merging_tags_without_common_tags
-    t1 = Tag.find(2)
-    t2 = Tag.find(3)
-    p_ids = t1.projects.to_a.map(&:id) + t2.projects.to_a.map(&:id)
+    t2 = Tag.find(2)
+    t3 = Tag.find(3)
+    p_ids = t2.projects.to_a.map(&:id) + t3.projects.to_a.map(&:id)
     p_ids.uniq!.sort!
-    assert t1.update_attributes( :name => t2.name )
-    assert t1.frozen?, "Tag 1 should be frozen"
-    assert_raise (ActiveRecord::RecordNotFound) { Tag.find(2) }
-    assert_nothing_raised(Exception) { t2 = Tag.find(3) }
+    assert Tag.merge_tags(t2,t3)
+    assert t3.frozen?, "Tag 2 should be frozen"
+    assert_raise (ActiveRecord::RecordNotFound) { Tag.find(3) }
+    assert_nothing_raised(Exception) { t2 = Tag.find(2) }
     assert_equal p_ids, t2.projects.to_a.map(&:id).sort
   end
 
