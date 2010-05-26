@@ -10,6 +10,9 @@ pl:
   tags:
     assigned_projects: "Przypisane projekty"
     delete: "Usuń"
+    edit: "Edytuj"
+    save: "Zapisz"
+    updated: "Tag został pomyślnie zmieniony"
     del_confirm: "Czy na pewno chcesz usunąć"
     no_tags: "Brak tagów do wyświetlenia"
     deleted: "Tag został pomyślnie usunięty"
@@ -21,6 +24,9 @@ pl:
     delete_selected: "Usuń zaznaczone"
     deleted_tags: "Usunięto tagi"
     unused_tags: "Nieużywane tagi"
+    new_name: "Nowa nazwa tagu"
+    confirm_edit: "Czy na pewno chcesz zmienić nazwę tagu?"
+    exists: "Tag o podanej nazwie już istnieje. Tagi zostaną połączone."
 
   activerecord:
     errors:

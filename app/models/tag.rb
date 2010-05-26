@@ -1,6 +1,7 @@
 class Tag < ActiveRecord::Base
   has_and_belongs_to_many :projects
 
+  attr_accessible :name
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_format_of :name,
@@ -21,17 +22,19 @@ class Tag < ActiveRecord::Base
       :limit => 10
   }}
 
+
   # Returns number of projects associated with this tag.
   def project_count
     @project_count ||= attributes['project_count'] 
     @project_count ||= self.projects.count
   end
 
-#  def self.for_autocomplete(stag)
-#    tags = Tag.all :conditions => ['tags.name LIKE ?', "%"+stag+"%" ]
-#    tags = tags.to_a.sort! { |a,b| b.project_count <=> a.project_count }
-#    tags[0,10]
-#  end
+  def self.merge_tags(tag_saved, tag_dropped)
+    tag_saved.project_ids += tag_dropped.project_ids
+    tag_saved.project_ids.uniq!
+    tag_saved.save
+    tag_dropped.destroy
+  end
 
   # +all_associations+ class method is used to count all tag-project connections
   def self.all_associations
@@ -45,7 +48,7 @@ class Tag < ActiveRecord::Base
       select_value(
       "SELECT count(*)
        FROM projects_tags
-       GROUP BY project_id
+       GROUP BY tag_id
        ORDER BY 1 DESC
        LIMIT 1").to_i
   end
