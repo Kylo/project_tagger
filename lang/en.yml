@@ -27,6 +27,7 @@ en:
     new_name: "New name for tag: "
     confirm_edit: "Are you sure you want to change tag name?"
     exists: "Tag with this name already exists. Tags will be merged."
+    no_tags_selected: "No tags were selected."
 
   activerecord:
     errors:
