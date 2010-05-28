@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  before_filter :require_admin, :except => [:complete_tags, :suggest]
+  before_filter :require_admin, :except => [:complete_tags, :suggest, :filter]
   helper :projects
 
   layout 'admin', :except => :filter
@@ -75,6 +75,7 @@ class TagsController < ApplicationController
     end
     @tag_sum = 0
     @tags.each { |tag| @tag_sum += @tag_count[tag.name] }
+    render :layout => 'base'
   end
 
   def complete_tags
