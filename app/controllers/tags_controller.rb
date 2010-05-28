@@ -17,11 +17,16 @@ class TagsController < ApplicationController
   end
 
   def del_unused
-    @tags = Tag.find_all_by_id params[:tags_ids]
-    @tags = @tags.to_a.map(&:name)
-    Tag.destroy params[:tags_ids]
-    flash[:notice] = "#{l('tags.deleted_tags')}: #{@tags.join(", ")}"
-    redirect_to :action => "index"
+    if params[:tags_ids].nil?
+      flash[:notice] = l('tags.no_tags_selected')
+      redirect_to :action => "index"
+    else
+      @tags = Tag.find_all_by_id params[:tags_ids]
+      @tags = @tags.to_a.map(&:name)
+      Tag.destroy params[:tags_ids]
+      flash[:notice] = "#{l('tags.deleted_tags')}: #{@tags.join(", ")}"
+      redirect_to :action => "index"
+    end
   end
 
   def edit

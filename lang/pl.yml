@@ -27,6 +27,7 @@ pl:
     new_name: "Nowa nazwa tagu"
     confirm_edit: "Czy na pewno chcesz zmienić nazwę tagu?"
     exists: "Tag o podanej nazwie już istnieje. Tagi zostaną połączone."
+    no_tags_selected: "Nie wybrano żadnych tagów."
 
   activerecord:
     errors:
