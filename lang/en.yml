@@ -10,10 +10,26 @@ en:
   tags:
     assigned_projects: "Assigned projects"
     delete: "Delete"
+    edit: "Edit"
+    save: "Save"
+    updated: "Tag successfully updated"
     del_confirm: "Are you sure you want to delete"
     no_tags: "No tags to show"
+    deleted: "Tag successfully deleted"
+    projects: "Projects:"
+    delete_unused: "Delete unused"
+    no_unused_tags: "No unused tags"
+    select_all: "Select all"
+    deselect_all: "Deselect all"
+    delete_selected: "Delete selected"
+    deleted_tags: "Deleted tags"
+    unused_tags: "Unused tags"
+    new_name: "New name for tag: "
+    confirm_edit: "Are you sure you want to change tag name?"
+    exists: "Tag with this name already exists. Tags will be merged."
+    no_tags_selected: "No tags were selected."
 
   activerecord:
     errors:
       messages:
-        plural_invalid: "are invalid"
+        tags_invalid: "are invalid. Allowed characters - letters, digits, single space, and !@#$%^&*()_=-+[]{}?."

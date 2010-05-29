@@ -22,3 +22,11 @@ pt_5:
 pt_6:
   project_id: 2
   tag_id: 2
+
+pt_7:
+  project_id: 3
+  tag_id: 3
+
+pt_8:
+  project_id: 3
+  tag_id: 4

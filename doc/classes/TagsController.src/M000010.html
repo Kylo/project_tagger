@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>filter (TagsController)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/controllers/tags_controller.rb, line 72</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">filter</span>
+    <span class="ruby-identifier">tag_list</span>=<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:tags</span>].<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/,/</span>)
+    <span class="ruby-ivar">@projects</span> = <span class="ruby-constant">Project</span>.<span class="ruby-identifier">visible</span>.<span class="ruby-identifier">find_all_for_all_tags</span>(<span class="ruby-identifier">tag_list</span>)
+    <span class="ruby-ivar">@tags</span> = <span class="ruby-constant">Tag</span>.
+      <span class="ruby-identifier">for_projects</span>(<span class="ruby-ivar">@projects</span>).
+      <span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span> <span class="ruby-identifier">tag_list</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">name</span>) }
+    <span class="ruby-ivar">@tag_count</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
+    <span class="ruby-ivar">@projects</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">project</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">tags</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span>
+        <span class="ruby-ivar">@tag_count</span>[<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">name</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-ivar">@tag_sum</span> = <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@tags</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@tag_sum</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@tag_count</span>[<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">name</span>] }
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'base'</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -20,10 +20,10 @@ class ProjectTest < ActiveSupport::TestCase
     num=Tag.count
     p = Project.find 2
     p.tag_list='Java, C++, completely_new_tag'
-    assert p.save
+    assert p.save, 'Project should save with "completely_new_tag"'
     tags_tab = p.tags(true).to_a.map{ |t| t.name }
-    assert tags_tab.include? 'Java'
-    assert tags_tab.include? 'C++'
+    assert tags_tab.include?('Java'), 'Project should be tagged with "Java"'
+    assert tags_tab.include?('C++'), 'Project should be tagged with "C++"'
     assert tags_tab.include?('completely_new_tag'),
       "New tag should be associated"
     assert tags_tab.length==3,
@@ -72,19 +72,23 @@ class ProjectTest < ActiveSupport::TestCase
     p = Project.find 2
     p.tag_list='c++, c++, c++'
     assert p.save, "Project should save"
-    assert p.tags(true).count==1, "Repeated tags should be saved as one"
+    #assert p.tags(true).count==1, "Repeated tags should be saved as one"
+    assert_equal 1, p.tags(true).count
+    
   end
 
   def test_filtering
     projects = Project.find_all_for_all_tags('Java')
-    assert projects.length == 2
+    assert_equal 2, projects.length
     projects = Project.find_all_for_all_tags('ASM')
-    assert projects.length == 1
+    assert_equal 2, projects.length
     projects = Project.find_all_for_all_tags('Nonexsistent')
-    assert projects.length == 0
+    assert_equal 0, projects.length
     projects = Project.find_all_for_all_tags(['Java','C++'])
-    assert projects.length == 2
+    assert_equal 2, projects.length
     projects = Project.find_all_for_all_tags(['Java','ASM'])
-    assert projects.length == 1
+    assert_equal 1, projects.length
   end
+
+  
 end

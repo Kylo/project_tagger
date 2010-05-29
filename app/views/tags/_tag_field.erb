@@ -1,4 +1,33 @@
+<%= javascript_include_tag 'controls', :plugin => 'project_tagger' %>
+
+<script type="text/javascript">
+  function suggest_tags() {
+    new Ajax.Request('/tags/suggest',{
+      method: 'post',
+      parameters:{
+        name: $F('project_name'),
+        description: $F('project_description'),
+        current: $F('project_tag_list')
+      }
+    });
+  }
+  $('project_name').observe('blur',suggest_tags);
+  $('project_description').observe('blur',suggest_tags);
+</script>
+
 <p>
   <%= form.text_field :tag_list, :size => 60 %><br />
   <em><%=l :field_tag_list_comment %></em>
+<div id="tags_autocomplete" class="autocomplete"></div>
+<script type="text/javascript">
+  new Ajax.Autocompleter('project_tag_list',
+  'tags_autocomplete',
+  '/tags/complete_tags',
+  {
+    tokens : ',',
+    paramName : 'tag',
+    minChars : 2,
+    select: 'value'
+  });
+</script>
 </p>

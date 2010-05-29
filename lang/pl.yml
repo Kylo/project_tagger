@@ -10,10 +10,26 @@ pl:
   tags:
     assigned_projects: "Przypisane projekty"
     delete: "Usuń"
+    edit: "Edytuj"
+    save: "Zapisz"
+    updated: "Tag został pomyślnie zmieniony"
     del_confirm: "Czy na pewno chcesz usunąć"
     no_tags: "Brak tagów do wyświetlenia"
+    deleted: "Tag został pomyślnie usunięty"
+    projects: "Projekty:"
+    delete_unused: "Usuń nieużywane"
+    no_unused_tags: "Brak nieużywanych tagów"
+    select_all: "Zaznacz wszystkie"
+    deselect_all: "Odznacz wszystkie"
+    delete_selected: "Usuń zaznaczone"
+    deleted_tags: "Usunięto tagi"
+    unused_tags: "Nieużywane tagi"
+    new_name: "Nowa nazwa tagu"
+    confirm_edit: "Czy na pewno chcesz zmienić nazwę tagu?"
+    exists: "Tag o podanej nazwie już istnieje. Tagi zostaną połączone."
+    no_tags_selected: "Nie wybrano żadnych tagów."
 
   activerecord:
     errors:
       messages:
-        plural_invalid: "są błędne"
+        tags_invalid: "są błędne. Dozwolone znaki - litery, cyfry, pojedyncza spacja oraz !@#$%^&*()_=-+[]{}?."

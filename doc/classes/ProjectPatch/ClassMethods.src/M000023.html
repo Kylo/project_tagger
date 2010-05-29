@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>find_all_for_all_tags (ProjectPatch::ClassMethods)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/project_patch.rb, line 23</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_all_for_all_tags</span>(<span class="ruby-identifier">tags</span>)
+      <span class="ruby-identifier">joins</span>=[]
+      <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span>, <span class="ruby-identifier">idx</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">tags_alias</span> = <span class="ruby-node">&quot;tags_#{idx}&quot;</span>
+        <span class="ruby-identifier">projects_tags_alias</span> = <span class="ruby-node">&quot;projects_tags_#{idx}&quot;</span>
+        <span class="ruby-identifier">join</span> = <span class="ruby-value str">&quot;INNER JOIN projects_tags \#{projects_tags_alias}\nON \#{projects_tags_alias}.project_id = projects.id\nINNER JOIN tags \#{tags_alias}\nON \#{projects_tags_alias}.tag_id = \#{tags_alias}.id\nAND \#{tags_alias}.name = ?\n&quot;</span>
+
+        <span class="ruby-identifier">joins</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sanitize_sql</span>([<span class="ruby-identifier">join</span>, <span class="ruby-identifier">tag</span>])
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">joins</span> = <span class="ruby-identifier">joins</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; &quot;</span>)
+
+      <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>,
+        <span class="ruby-identifier">:select</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'DISTINCT projects.*'</span>,
+        <span class="ruby-identifier">:joins</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">joins</span>,
+        <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'lft'</span>
+      )
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

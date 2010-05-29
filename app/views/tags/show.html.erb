@@ -1,4 +1,6 @@
 <div class="contextual">
+  <%= link_to l('tags.edit'), {:action => 'edit', :id => @tag},
+    :class => 'icon icon-edit' %>
   <%= link_to l('tags.delete'), {:action => 'delete', :id => @tag},
     :confirm => "#{l('tags.del_confirm')}: #{@tag.name}?", :class => 'icon icon-del' %>
 </div>
@@ -14,7 +16,7 @@
           url_for(:controller => 'projects', :action => :show, :id => project.identifier),
           {:class => 'project'} -%>
         <div class="wiki description">
-            <%= textilizable(project.short_description(100), :project => project) %>
+          <%= textilizable(project.short_description(100), :project => project) %>
         </div>
       </div>
     </li>

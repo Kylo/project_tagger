@@ -1,21 +1,44 @@
 class Tag < ActiveRecord::Base
+  unloadable
   has_and_belongs_to_many :projects
 
+  attr_accessible :name
   validates_presence_of :name
   validates_uniqueness_of :name
+
+  # Tag name can contain only letters, digits, single space and any of !@#$%^&*()_=-+[]{}?.
   validates_format_of :name,
     :with => /^([a-zA-Z0-9!@#\$%^&*()_=\-+\[\]{}?.][a-zA-Z0-9!@#\$%^&*()_=\-+\[\]{}?. ]?)+$/
 
   default_scope :order => :id
   named_scope :for_projects, lambda { |p_ids| {
-      :select => 'DISTINCT "tags".*',
+      :select => 'DISTINCT tags.*',
       :joins => :projects,
       :conditions => { :projects => { :id => p_ids } } }
   }
+  named_scope :for_autocomplete, lambda { |stag| {
+      :select => 'tags.*, count(projects_tags.tag_id) as project_count',
+      :joins => 'INNER JOIN projects_tags ON tags.id = projects_tags.tag_id',
+      :group => 'tags.id, tags.name',
+      :conditions => ['LOWER(tags.name) LIKE ?', "%"+stag.downcase+"%" ],
+      :order => 'project_count DESC',
+      :limit => 10
+  }}
+
 
   # Returns number of projects associated with this tag.
   def project_count
+    @project_count ||= attributes['project_count'] 
     @project_count ||= self.projects.count
+  end
+
+  # Merges projects lists which belong to _tag_saved_ and _tag_drooped_.
+  # Than saves _tag_saved_ and destroys _tag_dropped_.
+  def self.merge_tags(tag_saved, tag_dropped)
+    tag_saved.project_ids += tag_dropped.project_ids
+    tag_saved.project_ids.uniq!
+    tag_saved.save
+    tag_dropped.destroy
   end
 
   # +all_associations+ class method is used to count all tag-project connections
@@ -30,9 +53,19 @@ class Tag < ActiveRecord::Base
       select_value(
       "SELECT count(*)
        FROM projects_tags
-       GROUP BY project_id
+       GROUP BY tag_id
        ORDER BY 1 DESC
        LIMIT 1").to_i
+  end
+
+  # Returns all tags that have no association with any project.
+  def self.find_unused
+    Tag.find_by_sql(
+    "SELECT *
+     FROM tags
+     WHERE tags.id NOT IN (
+       SELECT DISTINCT projects_tags.tag_id
+       FROM projects_tags)")
   end
 
 end
