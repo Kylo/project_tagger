@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>suggest (TagsController)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/controllers/tags_controller.rb, line 101</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">suggest</span>
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">post?</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-identifier">:nothing=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">return</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">tags</span> = <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:name</span>)
+    <span class="ruby-identifier">current</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:current</span>].<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/,/</span>)
+    <span class="ruby-identifier">current</span>.<span class="ruby-identifier">map!</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">tag_name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">tag_name</span>.<span class="ruby-identifier">strip</span>}
+    <span class="ruby-identifier">current</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">current</span>)
+    <span class="ruby-identifier">found</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:name</span>] <span class="ruby-operator">=~</span> <span class="ruby-node">/#{Regexp.escape(tag)}/i</span> \
+        <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:description</span>] <span class="ruby-operator">=~</span> <span class="ruby-node">/#{Regexp.escape(tag)}/i</span>
+
+        <span class="ruby-identifier">found</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tag</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">current</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">found</span>)
+    <span class="ruby-ivar">@tags_list</span> = <span class="ruby-identifier">current</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;, &quot;</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
