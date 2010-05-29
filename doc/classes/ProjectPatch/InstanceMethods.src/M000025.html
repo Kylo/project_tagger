@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>tag_list= (ProjectPatch::InstanceMethods)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/project_patch.rb, line 60</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_list=</span>(<span class="ruby-identifier">list</span>)
+      <span class="ruby-identifier">new_tag_list</span>=<span class="ruby-identifier">list</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/,/</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> }
+      <span class="ruby-identifier">new_tag_list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag_name</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tags</span>(<span class="ruby-keyword kw">false</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:name</span>).<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">tag_name</span>)
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">t</span>=<span class="ruby-constant">Tag</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-identifier">tag_name</span>)
+            <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tags</span>(<span class="ruby-keyword kw">false</span>)<span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">t</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tags</span>(<span class="ruby-keyword kw">false</span>).<span class="ruby-identifier">build</span> <span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">tag_name</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">tmp</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tags</span>(<span class="ruby-keyword kw">false</span>).<span class="ruby-identifier">to_a</span>)
+      <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">new_tag_list</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">name</span>
+          <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tags</span>(<span class="ruby-keyword kw">false</span>).<span class="ruby-identifier">delete</span> <span class="ruby-identifier">tag</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@tag_list</span>=<span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

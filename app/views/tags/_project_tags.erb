@@ -1,6 +1,12 @@
 <div class="tags box">
-  <h3>Tags</h3>
+  <h3><%= l :tags_name %></h3>
   <div id="tags">
-    (here tags assigned to project)
+    <% if @project.tags.empty? %>
+      <%= l 'tags.no_tags' %>
+    <% else %>
+      <% @project.tags.each do |tag| %>
+        <%= link_to tag.name, {:controller => 'tags', :action => 'filter', :tags => tag.name} %>
+      <% end %>
+    <% end %>
   </div>
 </div>

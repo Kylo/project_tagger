@@ -32,10 +32,35 @@ class ProjectsControllerTest < ActionController::TestCase
     assert_select 'input[id=project_tag_list][size=60][value="Java, C++"]'
   end
 
+  def test_cloud
+    @request.session[:user_id] = 1
+    get :index
+    tags = Tag.all.to_a.map(&:name)
+    assert_select 'div#wrapper div#main div#content div#tags-cloud' do
+      tags.each do |tag|
+        assert_select 'a', tag
+      end
+    end
+  end
+
   def test_cloud_no_tags
     Tag.destroy(Tag.all)
     @request.session[:user_id] = 1
     get :index
     assert_select 'div#wrapper div#main div#content div#tags-cloud', 'No tags to show'
   end
+
+  def test_project_tags
+    p=Project.find(1)
+    @request.session[:user_id] = 1
+    get :show, :id => p
+    assert_response :success
+    tags = p.tags.all.to_a.map(&:name)
+    assert_select 'div#wrapper div#main div#content div#tags' do
+      tags.each do |tag|
+        assert_select 'a', tag
+      end
+    end
+  end
+
 end

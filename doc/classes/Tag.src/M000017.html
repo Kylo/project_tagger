@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>max_associated_projects (Tag)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File app/models/tag.rb, line 50</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">max_associated_projects</span>
+    <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">connection</span>.
+      <span class="ruby-identifier">select_value</span>(
+      <span class="ruby-value str">&quot;SELECT count(*)
+       FROM projects_tags
+       GROUP BY tag_id
+       ORDER BY 1 DESC
+       LIMIT 1&quot;</span>).<span class="ruby-identifier">to_i</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

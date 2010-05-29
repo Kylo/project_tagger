@@ -23,4 +23,15 @@ projects_002:
   parent_id:
   lft: 11
   rgt: 12
-  
+projects_003:
+  created_on: 2006-07-19 19:15:21 +02:00
+  name: eCookbook Subproject 1
+  updated_on: 2006-07-19 19:18:12 +02:00
+  id: 3
+  description: eCookBook Subproject 1
+  homepage: ""
+  is_public: true
+  identifier: subproject1
+  parent_id: 1
+  lft: 6
+  rgt: 7
