@@ -81,6 +81,7 @@ end
 Project.send(:include, ProjectPatch)
 
 module ProjectsHelper
+  # Function for determining tag font size in cloud at projects index.
   def font_size_for_tag(tag)
     @max_count ||= Tag.max_associated_projects
     100+(200/@max_count)*tag.projects.count

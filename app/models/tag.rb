@@ -4,6 +4,8 @@ class Tag < ActiveRecord::Base
   attr_accessible :name
   validates_presence_of :name
   validates_uniqueness_of :name
+
+  # Tag name can contain only letters, digits, single space and any of !@#$%^&*()_=-+[]{}?.
   validates_format_of :name,
     :with => /^([a-zA-Z0-9!@#\$%^&*()_=\-+\[\]{}?.][a-zA-Z0-9!@#\$%^&*()_=\-+\[\]{}?. ]?)+$/
 
@@ -29,6 +31,8 @@ class Tag < ActiveRecord::Base
     @project_count ||= self.projects.count
   end
 
+  # Merges projects lists which belong to _tag_saved_ and _tag_drooped_.
+  # Than saves _tag_saved_ and destroys _tag_dropped_.
   def self.merge_tags(tag_saved, tag_dropped)
     tag_saved.project_ids += tag_dropped.project_ids
     tag_saved.project_ids.uniq!
@@ -53,6 +57,7 @@ class Tag < ActiveRecord::Base
        LIMIT 1").to_i
   end
 
+  # Returns all tags that have no association with any project.
   def self.find_unused
     Tag.find_by_sql(
     "SELECT *

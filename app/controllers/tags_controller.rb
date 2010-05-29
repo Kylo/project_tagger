@@ -12,10 +12,11 @@ class TagsController < ApplicationController
     @tag = Tag.find params[:id]
   end
 
+  # Action for showing unused tags.
   def unused
-
   end
 
+  # Action for deleting unused tags.
   def del_unused
     if params[:tags_ids].nil?
       flash[:notice] = l('tags.no_tags_selected')
@@ -52,6 +53,7 @@ class TagsController < ApplicationController
     redirect_to :action => 'show', :id => Tag.find_by_name(params[:tag][:name])
   end
 
+  # Action for checking if tags already exists. Used in Tags > "Tag" > Edit
   def check
     unless request.post?
       render_404
@@ -66,6 +68,7 @@ class TagsController < ApplicationController
     render :text =>'false'
   end
 
+  # Filtering projects according to tags
   def filter
     tag_list=params[:tags].split(/,/)
     @projects = Project.visible.find_all_for_all_tags(tag_list)
@@ -83,6 +86,7 @@ class TagsController < ApplicationController
     render :layout => 'base'
   end
 
+  # Tags autocompletition. Used in Projects > New and in Tags > "Tag" > Edit
   def complete_tags
     unless request.post?
       render_404
@@ -92,6 +96,8 @@ class TagsController < ApplicationController
     render :partial => "auto_completed"
   end
 
+  # Suggesting tags based on Project name and description.
+  # Used in Projects > New and Projects > "Project" > Settings
   def suggest
     unless request.post?
       render :nothing=>true
