@@ -110,8 +110,8 @@ class TagsController < ApplicationController
     current = Set.new(current)
     found = Set.new
     tags.each do |tag|
-      if params[:name] =~ /#{Regexp.escape(tag)}/i \
-        || params[:description] =~ /#{Regexp.escape(tag)}/i
+      if params[:name] =~ /(\s|^)#{Regexp.escape(tag)}(\s|$)/i \
+        || params[:description] =~ /(\s|^)#{Regexp.escape(tag)}(\s|$)/i
 
         found << tag
       end
